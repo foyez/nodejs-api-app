@@ -1,0 +1,49 @@
+openapi: "3.0.0"
+info:
+  version: "1.0.0"
+  title: "Boilerplate NodeJS API"
+  description: "An API that builds for learning purpose."
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    name: "Kazi Foyez Ahmed"
+    email: "foyezar@gmail.com"
+    url: "https://foyez.netlify.com"
+  license:
+    name: "NodeJS Api 1.0"
+    url: "http://www.foyez.netlify.com/licenses/LICENSE-1.0.html"
+servers:
+  - url: "http://localhost:5000/api/v1"
+    description: "Dev server"
+paths:
+  /search:
+    get:
+      description: "Search by places using opencagedata service"
+      parameters:
+        - name: q
+          in: query
+          required: true
+          description: Specifies the query string
+          schema:
+            type: string
+            example: "Berlin"
+      responses:
+        200:
+          description: "Ok"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Search"
+        400:
+          description: Bad Request
+
+components:
+  schemas:
+    Search:
+      description: search results
+      type: object
+      properties:
+        type:
+          type: string
+          example: FeatureCollection
+        # features:
+        #   type: array

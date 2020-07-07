@@ -3,7 +3,7 @@ import express from 'express'
 
 import { applyMiddleware, applyRoutes } from './utils'
 import { middleware } from './middleware'
-import { routes } from './services'
+import { v1Routes } from './services/v1'
 import { errorHandlers } from './middleware/errorHandlers'
 
 process.on('uncaughtException', (err) => {
@@ -20,7 +20,7 @@ const startServer = () => {
   const router = express()
 
   applyMiddleware(middleware, router)
-  applyRoutes(routes, router)
+  applyRoutes('/api/v1', v1Routes, router)
   applyMiddleware(errorHandlers, router)
 
   const { PORT = 5000 } = process.env

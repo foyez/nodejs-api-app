@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { getPlaces } from './providers/OpenCageDataProvider'
 
-export const getPlacesByName = async (q: string) => {
+export const getPlacesByName = async (q: string): Promise<any> => {
   if (q.length < 3) {
     return {
       type: 'FeatureCollection',
@@ -8,5 +9,7 @@ export const getPlacesByName = async (q: string) => {
     }
   }
 
-  return await getPlaces(q)
+  const places = await getPlaces(q)
+
+  return places
 }

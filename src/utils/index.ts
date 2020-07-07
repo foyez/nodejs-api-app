@@ -5,7 +5,7 @@ type MiddlewareWrapper = (router: Router) => void
 export const applyMiddleware = (
   middlewareWrappers: MiddlewareWrapper[],
   router: Router,
-) => {
+): void => {
   for (const middlewareWrapper of middlewareWrappers) {
     middlewareWrapper(router)
   }
@@ -27,9 +27,10 @@ export const applyRoutes = (
   rootPath: string,
   routes: Route[],
   router: Router,
-) => {
+): void => {
   for (const route of routes) {
     const { method, path, handler } = route
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ;(router as any)[method](`${rootPath}${path}`, handler)
   }
 }

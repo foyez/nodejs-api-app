@@ -16,7 +16,7 @@ process.on('unhandledRejection', (err) => {
   process.exit(1)
 })
 
-const startServer = () => {
+const startServer = (): void => {
   const router = express()
 
   applyMiddleware(middleware, router)

@@ -8,7 +8,7 @@ export const searchRoutes = [
     method: 'get',
     handler: [
       checkSearchParams,
-      async ({ query }: Request, res: Response) => {
+      async ({ query }: Request, res: Response): Promise<void> => {
         const result = await getPlacesByName(query.q as string)
 
         res.status(200).send(result)

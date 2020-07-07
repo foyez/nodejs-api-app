@@ -1,7 +1,7 @@
 {
   "root": true,
   "parser": "@typescript-eslint/parser", // Specifies the ESLint parser
-  "plugins": ["@typescript-eslint", "no-loops"],
+  "plugins": ["@typescript-eslint"],
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended", // Uses the recommended rules from the @typescript-eslint/eslint-plugin
@@ -10,7 +10,19 @@
     "plugin:prettier/recommended" // Enables eslint-plugin-prettier and displays prettier errors as ESLint errors. Make sure this is always the last configuration in the extends array.
   ],
   "rules": {
-    "no-console": "warn"
-    // "no-loops/no-loops": "warn"
+    "semi": "off",
+    "@typescript-eslint/member-delimiter-style": [
+      "error",
+      {
+        "multiline": {
+          "delimiter": "none", // 'none' or 'semi' or 'comma'
+          "requireLast": true
+        },
+        "singleline": {
+          "delimiter": "semi", // 'semi' or 'comma'
+          "requireLast": false
+        }
+      }
+    ]
   }
 }

@@ -1,0 +1,29 @@
+version: 2.1
+orbs:
+  node: circleci/node@1.1.6
+jobs:
+  build:
+    docker:
+      - image: circleci/node:latest
+    steps:
+      - checkout
+      - node/with-cache:
+          steps:
+            - run: echo "yarn installing"
+            - run: yarn
+            - run: CI=true yarn run build
+  test:
+    docker:
+      - image: circleci/node:latest
+    steps:
+      - checkout
+      - node/with-cache:
+          steps:
+            - run: echo "testing running..."
+            - run: yarn
+            - run: npm test
+workflows:
+  build-and-test:
+    jobs:
+      - build
+      - test

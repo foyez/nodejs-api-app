@@ -1,5 +1,7 @@
 import { Response, NextFunction } from 'express'
+
 import { HTTPClientError, HTTP404Error } from '../utils/httpErrors'
+import { Logger } from '../config/logger'
 
 export const notFoundError = (): void => {
   throw new HTTP404Error('Method not found.')
@@ -11,8 +13,9 @@ export const clientError = (
   next: NextFunction,
 ): void => {
   if (err instanceof HTTPClientError) {
-    console.warn(err)
-    res.status(err.statusCode).send(err.message)
+    const { message, statusCode } = err
+    Logger.warn({ message })
+    res.status(statusCode).send(message)
   } else {
     next(err)
   }
@@ -24,7 +27,6 @@ export const serverError = (
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   next: NextFunction,
 ): void => {
-  console.error(err)
   if (process.env.NODE_ENV === 'production') {
     res.status(500).send('Internal Server Error')
   } else {

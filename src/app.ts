@@ -5,14 +5,21 @@ import { applyMiddleware, applyRoutes } from './utils'
 import { middleware } from './middleware'
 import { v1Routes } from './services/v1'
 import { errorHandlers } from './middleware/errorHandlers'
+import { Logger } from './config/logger'
 
 process.on('uncaughtException', (err) => {
-  console.log(err)
+  Logger.error({
+    message: `uncaughtException`,
+    extra: err,
+  })
   process.exit(1)
 })
 
 process.on('unhandledRejection', (err) => {
-  console.log(err)
+  Logger.error({
+    message: `unhandledRejection`,
+    extra: err,
+  })
   process.exit(1)
 })
 
@@ -27,7 +34,7 @@ const startServer = (): void => {
   const server = http.createServer(router)
 
   server.listen(PORT, () => {
-    console.log(`Server listening on port: ${PORT}...`)
+    Logger.info(`Server listening on port: ${PORT}...`)
   })
 }
 

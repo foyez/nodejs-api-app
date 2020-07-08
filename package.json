@@ -9,12 +9,15 @@
   "main": "build/app.js",
   "scripts": {
     "start": "npm run build && node build/app.js",
+    "start:pm2": "npx pm2-runtime start pm2.yml",
     "dev": "nodemon",
     "build": "rimraf ./build && tsc",
+    "postbuild": "copyfiles -u 1 src/**/*.yml build/",
     "test": "jest",
     "test:watch": "jest --watchAll --coverage",
     "lint": "eslint . --ext .ts",
-    "lint:fix": "eslint . --ext .ts --fix"
+    "lint:fix": "eslint . --ext .ts --fix",
+    "postinstall": "npm run build"
   },
   "engines": {},
   "husky": {
@@ -36,6 +39,7 @@
     "method-override": "^3.0.0",
     "mongoose": "^5.9.17",
     "morgan": "^1.10.0",
+    "pm2": "^4.4.0",
     "swagger-ui-express": "^4.1.4",
     "winston": "^3.2.1",
     "yamljs": "^0.3.0"
@@ -56,6 +60,7 @@
     "@types/yamljs": "^0.2.31",
     "@typescript-eslint/eslint-plugin": "^2.30.0",
     "@typescript-eslint/parser": "^2.30.0",
+    "copyfiles": "^2.3.0",
     "eslint": "^6.8.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.3",

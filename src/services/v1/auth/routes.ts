@@ -9,7 +9,6 @@ export const authRoutes = [
       async (req: Request, res: Response): Promise<void> => {
         const { email, password } = req.body
         const token = await register(email, password)
-        console.log('TOKEN: ', token)
 
         res.status(200).send({ auth: true, token })
       },

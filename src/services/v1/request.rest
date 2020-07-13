@@ -9,4 +9,4 @@ Content-Type: application/json
 ###
 
 GET http://localhost:5000/api/v1/test/protected
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAZW1haWwuY29tIiwiaWF0IjoxNTk0NjUwNDI0LCJleHAiOjE1OTQ2NTA3MjR9.pmXRPDW2OLyhPYYZXMSn3IhCWFZ7K6a4WPJJ8e06ilg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTU5NDY2MTI5NiwiZXhwIjoxNTk0NjYxNTk2fQ.WYKCYTTvgEguAj9tuYZzxqltMjI4l1IVTzK_TfwiXUA

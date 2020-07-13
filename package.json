@@ -15,7 +15,7 @@
     "postbuild": "copyfiles -u 1 src/**/*.yml build/",
     "test": "cross-env NODE_ENV=test jest",
     "test:watch": "jest --watchAll --coverage",
-    "lint": "eslint {src}/**/*.ts",
+    "lint": "eslint src/**/*.ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "postinstall": "npm run build"
   },

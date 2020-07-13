@@ -4,15 +4,23 @@ import bcrypt from 'bcryptjs'
 import { HTTP400Error, HTTP401Error } from '../../../utils/httpErrors'
 import { config } from '../../../config'
 
-const users = new Map()
-
-const setPassword = (password: string, email: string): void => {
-  const hashPassword = bcrypt.hashSync(password, 8)
-  users.set(email, hashPassword)
+interface User {
+  id: number
+  hashPassword: string
 }
 
-const generateJWT = (email: string): string => {
-  return jwt.sign({ email }, config.jwtSecretKey, {
+let id = 1
+const getId = (): number => id++
+const users: Map<string, User> = new Map()
+
+// const setPassword = (password: string, email: string): void => {
+//   const hashPassword = bcrypt.hashSync(password, 8)
+//   const id: number = getId()
+//   users.set(email, { id, hashPassword })
+// }
+
+const generateJWT = (id: number): string => {
+  return jwt.sign({ sub: id }, config.jwtSecretKey, {
     // algorithm: 'ES256',
     expiresIn: 300,
   })
@@ -27,12 +35,12 @@ export const authenticate = (email: string, password: string): string => {
     throw new HTTP400Error()
   }
 
-  const hashPassword = users.get(email)
-  if (!validPassword(password, hashPassword)) {
+  const user = users.get(email)
+  if (!user || !validPassword(password, user.hashPassword)) {
     throw new HTTP401Error()
   }
 
-  const token = generateJWT(email)
+  const token = generateJWT(user.id)
 
   return token
 }
@@ -45,9 +53,11 @@ export const register = async (
     throw new HTTP400Error()
   }
 
-  await setPassword(password, email)
+  const hashPassword = bcrypt.hashSync(password, 8)
+  const id: number = getId()
+  users.set(email, { id, hashPassword })
 
-  const token = generateJWT(email)
+  const token = generateJWT(id)
 
   return token
 }

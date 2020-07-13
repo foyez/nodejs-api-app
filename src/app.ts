@@ -6,6 +6,7 @@ import { middleware } from './middleware'
 import { v1Routes } from './services/v1'
 import { errorHandlers } from './middleware/errorHandlers'
 import { Logger } from './config/logger'
+import { config } from './config'
 
 process.on('uncaughtException', (err) => {
   Logger.error({
@@ -25,6 +26,9 @@ process.on('unhandledRejection', (err) => {
 
 const startServer = (): void => {
   const router = express()
+
+  // Check if all environment variables are set
+  config.checkEnvVariables()
 
   applyMiddleware(middleware, router)
   applyRoutes('/api/v1', v1Routes, router)

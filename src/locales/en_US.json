@@ -1,0 +1,5 @@
+{
+  "search": {
+    "query_length": "Hello {{firstName}}, you have to pass at least 3 letters"
+  }
+}

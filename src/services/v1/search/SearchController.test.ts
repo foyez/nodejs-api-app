@@ -7,7 +7,10 @@ jest.mock('got')
 describe('SearchController', () => {
   test('a query string is less than 3', async () => {
     const result = await getPlacesByName('BD')
-    expect(result).toEqual({ type: 'FeatureCollection', features: [] })
+    expect(result).toMatchObject({
+      type: 'FeatureCollection',
+      features: [],
+    })
   })
 
   test('response correct data', async () => {

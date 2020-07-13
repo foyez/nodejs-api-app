@@ -13,13 +13,16 @@
     "dev": "nodemon",
     "build": "rimraf ./build && tsc",
     "postbuild": "copyfiles -u 1 src/**/*.yml build/",
-    "test": "jest",
+    "test": "cross-env NODE_ENV=test jest",
     "test:watch": "jest --watchAll --coverage",
-    "lint": "eslint . --ext .ts",
+    "lint": "eslint {src}/**/*.ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "postinstall": "npm run build"
   },
-  "engines": {},
+  "engines": {
+    "node": ">=12.16.1",
+    "npm": ">=6.14.5"
+  },
   "husky": {
     "hooks": {
       "pre-commit": "npm run lint",
@@ -28,14 +31,18 @@
   },
   "license": "MIT",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "compression": "^1.7.4",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.2",
     "dotenv": "^8.2.0",
     "errorhandler": "^1.5.1",
     "express": "^4.17.1",
     "got": "^11.4.0",
     "helmet": "^3.22.0",
+    "i18n": "^0.10.0",
+    "jsonwebtoken": "^8.5.1",
     "method-override": "^3.0.0",
     "mongoose": "^5.9.17",
     "morgan": "^1.10.0",
@@ -45,12 +52,15 @@
     "yamljs": "^0.3.0"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
     "@types/compression": "^1.7.0",
     "@types/cors": "^2.8.6",
     "@types/express": "^4.17.6",
     "@types/got": "^9.6.11",
     "@types/helmet": "^0.0.47",
+    "@types/i18n": "^0.8.6",
     "@types/jest": "^25.2.1",
+    "@types/jsonwebtoken": "^8.5.0",
     "@types/method-override": "^0.0.31",
     "@types/mongoose": "^5.7.21",
     "@types/morgan": "^1.9.0",

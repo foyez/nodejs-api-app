@@ -8,5 +8,21 @@ Content-Type: application/json
 
 ###
 
+POST http://localhost:5000/api/v1/signin
+Content-Type: application/json
+
+{
+  "email": "test@email.com",
+  "password": "testpass"
+}
+
+###
+
+GET http://localhost:5000/api/v1/refresh/token
+Cookie: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTU5NDY2MTI5NiwiZXhwIjoxNTk0NjYxNTk2fQ.WYKCYTTvgEguAj9tuYZzxqltMjI4l1IVTzK_TfwiXUA
+
+###
+
 GET http://localhost:5000/api/v1/test/protected
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTU5NDY2MTI5NiwiZXhwIjoxNTk0NjYxNTk2fQ.WYKCYTTvgEguAj9tuYZzxqltMjI4l1IVTzK_TfwiXUA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImlhdCI6MTU5NDgyNjY5NywiZXhwIjoxNTk0ODI2OTk3fQ.LcnrLgiUPqaJ4PwHcabdTXlFmyjDlHXw4Y4q2AhNay4
+Set-Cookie: refreshToken=1iStbJAjJ6aUYmDcnoer1tS8Uv8NBo3GxbfLog4a6U77QYAd7xqg46Wc7mg0a4kqSp3nyuRkLAvngMzkgJAlM6ILV17knYTOj9h5gwgPB29ug3I8rvNaWKtJotXoEeBHF0iAcRDPpcCyPmCYFM7x1zE6GdTjU2wJarocM6hIGfxT0ftBLzNHGlhcgw0dkaNNyAid6sgqShYWBs6qosRpVO7SAZjQiseV7zuismW4DR6iOSLtYfYltcyrditgoXCX; Max-Age=2592000; Path=/refresh; Expires=Fri, 14 Aug 2020 15:20:12 GMT; HttpOnly

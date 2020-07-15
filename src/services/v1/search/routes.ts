@@ -1,8 +1,17 @@
-import { Request, Response } from 'express'
+import { Request, Response, NextFunction } from 'express'
 import { getPlacesByName } from './SearchController'
 import { checkSearchParams } from '../../../middleware/checks'
 import { authenticate } from '../../../middleware/authenticate'
 import { getFromCache } from '../../../middleware/caching'
+
+const cacheMiddleware = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): void => {
+  const key = `search-${req.query.q as string}`
+  getFromCache(key, res, next)
+}
 
 export const searchRoutes = [
   {
@@ -10,7 +19,7 @@ export const searchRoutes = [
     method: 'get',
     handler: [
       checkSearchParams,
-      getFromCache,
+      cacheMiddleware,
       async ({ query }: Request, res: Response): Promise<void> => {
         const result = await getPlacesByName(query.q as string)
 
@@ -24,7 +33,7 @@ export const searchRoutes = [
     handler: [
       authenticate,
       checkSearchParams,
-      getFromCache,
+      cacheMiddleware,
       async ({ query }: Request, res: Response): Promise<void> => {
         const result = await getPlacesByName(query.q as string)
 

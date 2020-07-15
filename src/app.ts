@@ -7,7 +7,7 @@ import { v1Routes } from './services/v1'
 import { errorHandlers } from './middleware/errorHandlers'
 import { Logger } from './config/logger'
 import { config } from './config'
-import { initRedis } from './config/redis'
+import { initDependencies } from './config'
 
 process.on('uncaughtException', (err) => {
   Logger.error({
@@ -38,7 +38,7 @@ const startServer = async (): Promise<void> => {
   const { PORT = 5000 } = process.env
   const server = http.createServer(router)
 
-  await initRedis()
+  await initDependencies()
 
   server.listen(PORT, () => {
     Logger.info(`Server listening on port: ${PORT}...`)

@@ -1,6 +1,7 @@
 import dotenv from 'dotenv'
 import { Logger } from './logger'
-// import { initRedis } from './redis'
+import { initCache } from './cache'
+import { initDb } from './db'
 
 const envFound = dotenv.config()
 
@@ -11,15 +12,12 @@ if (!envFound) {
 }
 
 // required variables
-const ENV_VARS = ['JWT_SECRETE_KEY', 'REDIS_HOST']
+const ENV_VARS = ['JWT_SECRETE_KEY', 'DB_CONNECTION', 'REDIS_HOST']
 
 export const config = {
   jwtSecretKey: process.env.JWT_SECRETE_KEY as string,
   redisHost: process.env.REDIS_HOST as string,
-
-  // initDependencies: async (): Promise<void> => {
-  //   await initRedis()
-  // },
+  dbConnection: process.env.DB_CONNECTION as string,
 
   checkEnvVariables: (): void => {
     ENV_VARS.forEach((key) => {
@@ -37,4 +35,9 @@ export const config = {
       }
     })
   },
+}
+
+export const initDependencies = async (): Promise<void> => {
+  await initCache()
+  // await initDb()
 }

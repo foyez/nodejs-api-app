@@ -1,17 +1,24 @@
-version: "3.7"
+version: '3.7'
 
 services:
   app:
-    container_name: nodejs-boilerplate
+    container_name: nodejs-api-app
     restart: always
     build: .
+    environment:
+      DB_CONNECTION: postgres://foyez:testpass@postgres:5432/nodejs-api-db
     ports:
-      - "5000:5000"
+      - '5000:5000'
     links:
-      - mongo
+      - postgres
 
-  mongo:
-    container_name: mongo
-    image: mongo
+  postgres:
+    container_name: postgres
+    image: postgres
+    environment:
+      POSTGRES_USER: foyez
+      POSTGRES_PASSWORD: testpass
+      POSTGRES_DB: nodejs-api-db
+      POSTGRES_HOST: postgres
     ports:
-      - "27017:27017"
+      - '5432:5432'

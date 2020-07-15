@@ -6,7 +6,7 @@ export const redisClient = redis.createClient({
   host: config.redisHost || '127.0.0.1',
 })
 
-export const initRedis = async (): Promise<RedisClient> =>
+export const initCache = async (): Promise<RedisClient> =>
   new Promise((resolve, reject) => {
     redisClient.on('connect', () => {
       Logger.info('Redis client connected')

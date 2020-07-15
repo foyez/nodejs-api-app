@@ -1,18 +1,17 @@
-import { Request, Response, NextFunction } from 'express'
+import { Response, NextFunction } from 'express'
 import { promisify } from 'util'
-import { redisClient } from '../config/redis'
+import { redisClient } from '../config/cache'
 
 const getAsync = promisify(redisClient.get).bind(redisClient)
 
 export const getFromCache = async (
-  req: Request,
+  key: string,
   res: Response,
   next: NextFunction,
 ): Promise<void> => {
-  const query = req.query.q as string
-
   try {
-    const data = await getAsync(query)
+    const data = await getAsync(key)
+
     if (data) {
       res.status(200).send(data)
     } else {

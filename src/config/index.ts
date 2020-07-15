@@ -1,5 +1,6 @@
 import dotenv from 'dotenv'
 import { Logger } from './logger'
+// import { initRedis } from './redis'
 
 const envFound = dotenv.config()
 
@@ -10,10 +11,15 @@ if (!envFound) {
 }
 
 // required variables
-const ENV_VARS = ['JWT_SECRETE_KEY']
+const ENV_VARS = ['JWT_SECRETE_KEY', 'REDIS_HOST']
 
 export const config = {
   jwtSecretKey: process.env.JWT_SECRETE_KEY as string,
+  redisHost: process.env.REDIS_HOST as string,
+
+  // initDependencies: async (): Promise<void> => {
+  //   await initRedis()
+  // },
 
   checkEnvVariables: (): void => {
     ENV_VARS.forEach((key) => {

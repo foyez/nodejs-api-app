@@ -7,6 +7,7 @@ import { v1Routes } from './services/v1'
 import { errorHandlers } from './middleware/errorHandlers'
 import { Logger } from './config/logger'
 import { config } from './config'
+import { initRedis } from './config/redis'
 
 process.on('uncaughtException', (err) => {
   Logger.error({
@@ -24,7 +25,7 @@ process.on('unhandledRejection', (err) => {
   process.exit(1)
 })
 
-const startServer = (): void => {
+const startServer = async (): Promise<void> => {
   const router = express()
 
   // Check if all environment variables are set
@@ -36,6 +37,8 @@ const startServer = (): void => {
 
   const { PORT = 5000 } = process.env
   const server = http.createServer(router)
+
+  await initRedis()
 
   server.listen(PORT, () => {
     Logger.info(`Server listening on port: ${PORT}...`)

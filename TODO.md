@@ -23,5 +23,6 @@
 20. Socket.io
 
 Links:
+
 1. https://itnext.io/production-ready-node-js-rest-apis-setup-using-typescript-postgresql-and-redis-a9525871407
 2. https://github.com/talyssonoc/node-api-boilerplate

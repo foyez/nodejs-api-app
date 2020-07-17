@@ -12,7 +12,10 @@ export const initCache = async (): Promise<RedisClient> =>
     })
 
     redisClient.on('error', (err) => {
-      Logger.info('Failed to connect Redis client')
+      Logger.warn({
+        message: 'Failed to connect Redis client',
+        extra: err,
+      })
       reject(err)
     })
   })

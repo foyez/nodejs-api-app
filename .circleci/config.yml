@@ -15,6 +15,10 @@ jobs:
   test:
     docker:
       - image: circleci/node:latest
+        environment:
+          DB_CONNECTION: postgresql://root@postgres/circle_test
+      - image: circleci/postgres
+      - image: circleci/redis
     steps:
       - checkout
       - node/with-cache:

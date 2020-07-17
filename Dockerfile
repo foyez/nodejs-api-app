@@ -15,3 +15,4 @@ COPY ./ ./
 EXPOSE $PORT
 
 CMD ["yarn", "run", "dev"]
+# CMD ["/bin/bash"]

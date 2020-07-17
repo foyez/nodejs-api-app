@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs'
 import randToken from 'rand-token'
 
 import { HTTP400Error, HTTP401Error } from '../../../utils/httpErrors'
-import { config } from '../../../config'
+import { envVars } from '../../../config/envVars'
 
 interface User {
   id: number
@@ -21,7 +21,7 @@ const getId = (): number => id++
 const users: Map<string, User> = new Map()
 
 const generateJWT = (id: number): string => {
-  return jwt.sign({ sub: id }, config.jwtSecretKey, {
+  return jwt.sign({ sub: id }, envVars.jwtSecretKey, {
     // algorithm: 'ES256',
     expiresIn: 300,
   })

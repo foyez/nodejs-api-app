@@ -6,7 +6,7 @@ import { middleware } from './middleware'
 import { v1Routes } from './services/v1'
 import { errorHandlers } from './middleware/errorHandlers'
 import { Logger } from './config/logger'
-import { config } from './config'
+import { envVars } from './config/envVars'
 import { initDependencies } from './config'
 
 process.on('uncaughtException', (err) => {
@@ -29,7 +29,7 @@ const startServer = async (): Promise<void> => {
   const router = express()
 
   // Check if all environment variables are set
-  config.checkEnvVariables()
+  envVars.checkEnvVariables()
 
   applyMiddleware(middleware, router)
   applyRoutes('/api/v1', v1Routes, router)

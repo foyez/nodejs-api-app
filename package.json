@@ -1,5 +1,5 @@
 {
-  "name": "tictactoe-multiplayer",
+  "name": "nodejs-api-app",
   "version": "1.0.0",
   "author": {
     "name": "Kazi Foyez Ahmed",
@@ -10,7 +10,7 @@
   "scripts": {
     "start": "npm run build && node build/app.js",
     "start:pm2": "npx pm2-runtime start pm2.yml",
-    "dev": "nodemon",
+    "dev": "nodemon -L",
     "build": "rimraf ./build && tsc",
     "postbuild": "copyfiles -u 1 src/**/*.yml build/",
     "test": "cross-env NODE_ENV=test jest",

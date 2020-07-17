@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express'
 import jwt from 'jsonwebtoken'
 
 import { HTTP401Error } from '../utils/httpErrors'
-import { config } from '../config'
+import { envVars } from '../config/envVars'
 
 const getTokenFromHeader = (req: Request): string | null => {
   if (
@@ -29,7 +29,7 @@ export const authenticate = (
   }
 
   try {
-    jwt.verify(token, config.jwtSecretKey)
+    jwt.verify(token, envVars.jwtSecretKey)
     next()
   } catch (err) {
     throw new HTTP401Error()

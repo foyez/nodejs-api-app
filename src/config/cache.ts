@@ -1,10 +1,8 @@
 import redis, { RedisClient } from 'redis'
 import { Logger } from './logger'
-import { config } from '.'
+import { envVars } from './envVars'
 
-export const redisClient = redis.createClient({
-  host: config.redisHost || '127.0.0.1',
-})
+export const redisClient = redis.createClient(envVars.redisUri)
 
 export const initCache = async (): Promise<RedisClient> =>
   new Promise((resolve, reject) => {
@@ -14,6 +12,7 @@ export const initCache = async (): Promise<RedisClient> =>
     })
 
     redisClient.on('error', (err) => {
+      Logger.info('Failed to connect Redis client')
       reject(err)
     })
   })

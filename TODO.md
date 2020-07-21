@@ -21,6 +21,7 @@
 18. Scraping
 19. Shell Script/command line
 20. Socket.io
+21. Deployment (Heroku, AWS, Digital Ocean, nginx)
 
 Links:
 

@@ -1,4 +1,4 @@
-version: '3.7'
+version: "3.7"
 
 services:
   # API
@@ -6,14 +6,18 @@ services:
     container_name: nodejs-api-app
     restart: always
     build: .
+    working_dir: /usr/src/app
     environment:
       DB_CONNECTION: ${DB_CONNECTION}
       REDIS_URI: redis://redis:6379
     ports:
-      - '5000:5000'
+      - "5000:5000"
     links:
       - postgres
       - redis
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules/
 
   # POSTGRES
   postgres:
@@ -25,10 +29,10 @@ services:
       POSTGRES_DB: ${POSTGRES_DB:-nodejs-api-db}
       POSTGRES_HOST: ${POSTGRES_HOST:-postgres}
     ports:
-      - '5432:5432'
+      - "5432:5432"
 
   # REDIS
   redis:
     image: redis
     ports:
-      - '6379:6379'
+      - "6379:6379"

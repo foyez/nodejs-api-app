@@ -10,14 +10,13 @@
   "scripts": {
     "start": "npm run build && node build/app.js",
     "start:pm2": "npx pm2-runtime start pm2.yml",
-    "dev": "nodemon -L",
+    "dev": "nodemon",
     "build": "rimraf ./build && tsc",
     "postbuild": "copyfiles -u 1 src/**/*.yml build/",
     "test": "cross-env NODE_ENV=test jest",
     "test:watch": "jest --watchAll --coverage",
     "lint": "eslint src/**/*.ts",
-    "lint:fix": "eslint . --ext .ts --fix",
-    "postinstall": "npm run build"
+    "lint:fix": "eslint . --ext .ts --fix"
   },
   "engines": {
     "node": ">=12.16.1",

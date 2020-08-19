@@ -97,4 +97,29 @@ export const authRoutes = [
       },
     ],
   },
+  {
+    path: '/login',
+    method: 'get',
+    handler: [
+      (req: Request, res: Response): void => {
+        res.status(200).send(`
+          <h1>Sign in Form</h1>
+          <form action='/api/v1/signin' method='POST'>
+            <div style="margin-bottom: 10px">
+              <label for="email">Your email:</label>
+              <input id="email" name="email" type="text" />
+            </div>
+            <div style="margin-bottom: 10px">
+              <label for="password">Your password:</label>
+              <input id="password" name="password" type="password" />
+            </div>
+          
+            <input type="hidden" name="_csrf" value="${req.csrfToken()}" />
+            <p>CSRF Token: ${req.csrfToken()}</p>
+            <input type="submit" value="Submit" />
+          </form>
+        `)
+      },
+    ],
+  },
 ]

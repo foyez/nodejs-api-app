@@ -27,3 +27,9 @@ Links:
 
 1. https://itnext.io/production-ready-node-js-rest-apis-setup-using-typescript-postgresql-and-redis-a9525871407
 2. https://github.com/talyssonoc/node-api-boilerplate
+
+```
+docker exec server-total_postgres_1 pg_dumpall -U foyez > dump_`date +%d-%m-%Y"_"%H_%M_%S`.sql
+
+cat /media/foyez/CAD86EE7D86ED0ED/MyBackup/junior-senior-webdev/full-stack/realworld/server-total/dump_19-08-2020_14_09_31.sql | docker exec -i server-total_postgres_1 psql -U foyez
+```

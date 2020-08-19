@@ -4,6 +4,7 @@ import randToken from 'rand-token'
 
 import { HTTP400Error, HTTP401Error } from '../../../utils/httpErrors'
 import { envVars } from '../../../config/envVars'
+import { createUser, getUserByEmail, getUserByRefreshToken } from './AuthModel'
 
 interface User {
   id: number
@@ -31,20 +32,22 @@ const validPassword = (password: string, hashPassword: string): boolean => {
   return bcrypt.compareSync(password, hashPassword)
 }
 
-export const authenticate = (email: string, password: string): Response => {
+export const authenticate = async (
+  email: string,
+  password: string,
+): Promise<Response> => {
   if (!email || !password) {
     throw new HTTP400Error()
   }
 
-  const user = users.get(email)
-  if (!user || !validPassword(password, user.hashPassword)) {
+  const user = await getUserByEmail(email)
+  if (!user || !validPassword(password, user.hash_password)) {
     throw new HTTP401Error()
   }
 
   const accessToken = generateJWT(user.id)
-  const { refreshToken } = user
 
-  return { accessToken, refreshToken }
+  return { accessToken, refreshToken: user.refresh_token }
 }
 
 export const register = async (
@@ -60,15 +63,20 @@ export const register = async (
   const id: number = getId()
   users.set(email, { id, hashPassword, refreshToken })
 
-  const accessToken = generateJWT(id)
+  try {
+    const id = await createUser(email, hashPassword, refreshToken)
+    const accessToken = generateJWT(id)
 
-  return { accessToken, refreshToken }
+    return { accessToken, refreshToken }
+  } catch (err) {
+    throw new HTTP400Error('This email already exists')
+  }
 }
 
-export const generateAccessToken = (refreshToken: string): string => {
-  const user = Array.from(users.values()).find(
-    (item) => item.refreshToken === refreshToken,
-  )
+export const generateAccessToken = async (
+  refreshToken: string,
+): Promise<string> => {
+  const user = await getUserByRefreshToken(refreshToken)
 
   if (!user) {
     throw new HTTP401Error()

@@ -2,7 +2,10 @@ import { Client } from 'pg'
 import { Logger } from './logger'
 import { envVars } from './envVars'
 
-export const dbClient = new Client(envVars.dbConnection)
+export const dbClient = new Client({
+  connectionString: envVars.postgresUri,
+  ssl: { rejectUnauthorized: false },
+})
 
 dbClient.on('error', (err: Error) => {
   Logger.error({
@@ -17,6 +20,9 @@ export const initDb = async (): Promise<void> => {
     await dbClient.connect()
     Logger.info('Postgres client connected')
   } catch (err) {
-    Logger.error('DB connection failed')
+    Logger.error({
+      message: 'DB connection failed',
+      extra: err,
+    })
   }
 }

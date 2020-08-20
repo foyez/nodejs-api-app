@@ -14,8 +14,8 @@ const ENV_VARS = ['JWT_SECRETE_KEY', 'DB_CONNECTION', 'REDIS_URI']
 
 export const envVars = {
   jwtSecretKey: process.env.JWT_SECRETE_KEY as string,
-  redisUri: process.env.REDIS_URI as string,
-  dbConnection: process.env.DB_CONNECTION as string,
+  redisUri: (process.env.REDIS_URI || 'redis://localhost:6379') as string,
+  postgresUri: process.env.POSTGRES_URI as string,
 
   checkEnvVariables: (): void => {
     ENV_VARS.forEach((key) => {

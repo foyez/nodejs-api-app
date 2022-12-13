@@ -39,7 +39,7 @@
     "csurf": "^1.11.0",
     "dotenv": "^8.2.0",
     "errorhandler": "^1.5.1",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-rate-limit": "^5.1.3",
     "got": "^11.4.0",
     "helmet": "^3.23.3",
